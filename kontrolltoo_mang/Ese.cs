@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace kontrolltoo_mang
 {
-    internal class Ese //: Uksus
+    internal class Ese : IUksus
     {
         private int punktideArv;
         private string nimetus;
@@ -22,7 +22,17 @@ namespace kontrolltoo_mang
         }
         public string Info()
         {
+            Console.WriteLine(nimetus);
             return nimetus; 
+        }
+        int IUksus.punktideArv()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string info()
+        {
+            throw new NotImplementedException();
         }
     }
 }
