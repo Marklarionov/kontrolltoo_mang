@@ -9,49 +9,59 @@ namespace kontrolltoo_mang
     internal class Tegelane : IUksus , IComparable<Tegelane>
     {
         private string nimi;
-        List<Ese> esed;
+        private List<Ese> Andmed;
 
         public Tegelane(string nimi)
         {
-            //esed = new List<Ese>();
             this.nimi = nimi;
         } 
+
         public void add (Ese asi) 
         {
-            esed.Add(asi); 
+            Andmed.Add(asi); 
         }
+
         public int EsedCount() 
         { 
-            return esed.Count; 
+            return Andmed.Count; 
         }
+
         public int punktideArv()
         {
             int sum = 0;
-            foreach(Ese asi in esed)
+            foreach(Ese asi in Andmed)
             {
-                sum += asi.PunktideArv();
+                //sum += asi.punktideArv();
             }
+            Console.WriteLine(sum + " punktid");
             return sum;
         }
+
         public string info()
         {
             return $"Nimi: {nimi}" +
-            $"Esemetu arv: {esed.Count()}" +
+            $"Esemetu arv: {Andmed.Count()}" +
             $"Punktide arv: {punktideArv()}";
         }
+
         public void valjastaEsemed()
         {
-            foreach(Ese asi in esed)
+            foreach(Ese asi in Andmed)
             {
-                Console.WriteLine(asi.Info() + " " + asi.PunktideArv());
+                //Console.WriteLine(asi.Info() + " " + asi.punktideArv());
             }
         }
 
-        public int CompareTo(Tegelane? other)
+        public int CompareTo(Tegelane other)             
         {
-            if (other == null) return 1;
-            return this.esed.Count - other.EsesKogus();
+            if (this.Andmed.Count > other.Andmed.Count) 
+            {
+                return 1;                                 
+            }
+            else                                         
+            {
+                return -1;                               
+            }
         }
-        private int EsesKogus() { return this.esed.Count; }
     }
 }

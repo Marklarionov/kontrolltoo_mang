@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+
 using System.Threading.Tasks;
 
 namespace kontrolltoo_mang
@@ -19,22 +19,20 @@ namespace kontrolltoo_mang
                 while(!sr.EndOfStream)
                 {
                     string[] rida = sr.ReadLine().Split(";");
-                    Ese ese = new Ese(StrToInt(rida[1]), rida[0]);
-                    esed.Add(ese);
+                    //Ese ese = new Ese(rida[0].ToString(), Int32.Parse(rida[1]));
+                    //esed.Add(ese);
                 }
             }
             return esed;
         }
-        static int StrToInt(string a)
+
+        static string rndName()
         {
-            int total = 0;
-            int b = 0;
-            for (int i = 0; i < a.Length; i++)
-                b = b * 10 + (a[i] - '0');
-            total += b;
-            return total;
+            string[] nimed = { "Anton", "Sasha", "Vlad", "Nastja", "Artem" }; 
+            return nimed[rnd.Next(nimed.Length)];
         }
-        public static void Shuffle<T>(this IList<T> list)
+
+        public static void Shuffle<T>(IList<T> list)
         {
             int n = list.Count;
             while (n > 1)
@@ -46,22 +44,32 @@ namespace kontrolltoo_mang
                 list[n] = value;
             }
         }
-        static string rndName()
-        {
-            string[] nimed = { "" }; 
-            return nimed[rnd.Next(nimed.Length)];
-        }
 
+        static Tegelane[] AddEse(Tegelane[] characters)                                       
+        {
+            List<Ese> itemList = LoeEsemed();
+            if (itemList.Count <= 0) throw new ArgumentOutOfRangeException();
+            foreach (Tegelane x in characters)
+            {
+                Shuffle(itemList);
+                int amount = rnd.Next(2, 10);
+                for (int i = 0; i < amount; i++)
+                {
+                    x.add(itemList[i]);
+                }
+            }
+            return characters;
+        }
         static Tegelane[] bestPlayers(int bstCount)
         {
             if (bstCount < 4) throw new Exception();
-            Tegelane[] plrs = new Tegelane[bstCount];
+            Tegelane[] mängijad = new Tegelane[bstCount];
             for (int i = 0; i < bstCount; i++)
             {
-                Tegelane plr = new Tegelane(rndName());
-                plrs[i] = plr;
+                Tegelane mängija = new Tegelane(rndName());
+                mängijad[i] = mängija;
             }
-            return giveOutItems(plrs);
+            return (mängijad);
         }
     }
 }
